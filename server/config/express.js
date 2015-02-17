@@ -17,7 +17,7 @@ module.exports = function(app, config) {
 	app.use(logger('dev'));
 	app.use(cookieParser());
 	app.use(bodyParser());
-	app.use(session({secret: 'umami narwhals'}));
+	app.use(session({secret: 'umami narwhals', resave:false, saveUninitialized:false}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(stylus.middleware(
