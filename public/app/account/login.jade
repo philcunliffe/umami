@@ -5,4 +5,6 @@ div(ng-controller="umLoginCtrl")
 			input.form-control(placeholder="Email", ng-model="username")
 		.form-group
 			input.form-control(placeholder="Password", type="password", ng-model="password")
-		button.btl.btn-primary(ng-click="signin(username, password)") Sign in
+		button.btl.btn-primary(ng-click="signIn(username, password)" ng-hide="identity.isAuthenticated()") Sign in
+		button.btl.btn-primary(ng-click="signOut()" ng-show="identity.isAuthenticated()") Sign out, {{identity.currentUser.firstName}}
+	h1(ng-show="identity.currentUser.isAdmin()") You are an admin

@@ -1,5 +1,5 @@
-var passport = require('passport'),
-	mongoose = require('mongoose');
+var auth = require('./auth')
+	sanitizeUser = require('./userSanitizer').sanitize;
 
 module.exports = function(app) {
 
@@ -7,31 +7,21 @@ module.exports = function(app) {
 		res.render('../../public/app/' + req.params[0]);
 	});
 
-	app.post('/login', function (req, res, next) {
-		var auth = passport.authenticate('local', function (err, user) {
-			if(err) { return next(err); }
-			if(!user) { res.send({success: false}); }
-			req.logIn(user, function(err) {
-				if (err) { return next(err); }
-				res.send({success: true, user: user});
-			});
-		});
-		auth(req, res, next);
+	app.post('/login', auth.authenticate);
+
+	app.post('/logout', function(req, res) {
+		req.logout();
+		res.end();
 	});
 
 	app.get('*', function(req, res) {
-		var User = mongoose.model('User');
-		var firstName = 'nope';
-		User.findOne({username: 'pcunliffe'}).exec(function (err, user) {
-			if(user) {
-				firstName = user.firstName;
-			} else {
-				firstName = err.toString();
-			}
-			res.render('index', {
-				firstName: firstName
-			});
+		var userDto;
+		if (!!req.user) {
+			//Stripping out salt and password
+			userDto = sanitizeUser(req.user);
+		}
+		res.render('index', {
+			bootstrappedUser: userDto
 		});
-		
 	});
 }
