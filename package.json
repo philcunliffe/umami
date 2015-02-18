@@ -1,7 +1,7 @@
 {
-  "name": "MultiVision",
+  "name": "umami",
   "version": "0.0.0",
-  "description": "Extreme Tech Training",
+  "description": "umami",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,8 @@
     "jade": "~0.35.0",
     "mongoose": "~3.8.0",
     "morgan": "^1.5.1",
+    "node-sass": "^2.0.1",
+    "node-sass-middleware": "^0.5.0",
     "passport": "^0.1.18",
     "passport-local": "^0.1.6",
     "stylus": "^0.40.3"

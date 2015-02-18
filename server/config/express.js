@@ -1,7 +1,7 @@
 var express = require('express'),
 	logger = require('morgan'),
 	bodyParser = require('body-parser'),
-	stylus = require('stylus'),
+	sassMiddleware = require('node-sass-middleware'),
 	cookieParser = require('cookie-parser'),
 	session = require('express-session')
 	passport = require('passport');
@@ -20,10 +20,11 @@ module.exports = function(app, config) {
 	app.use(session({secret: 'umami narwhals', resave:false, saveUninitialized:false}));
 	app.use(passport.initialize());
 	app.use(passport.session());
-	app.use(stylus.middleware(
+	app.use(sassMiddleware(
 		{
 			src: config.rootPath + '/public',
-			compile: compile
+			outputStyle: 'compressed',
+			debug: true
 		}
 	));
 	app.use(express.static(config.rootPath + '/public'));

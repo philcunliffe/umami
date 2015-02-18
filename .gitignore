@@ -43,3 +43,4 @@ Temporary Items
 .apdisk
 
 #sublimetext stuff
+/node_modules/*
